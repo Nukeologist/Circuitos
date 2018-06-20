@@ -1,0 +1,8 @@
+itemGroup.circuitos=Circuitos
+
+
+tile.circuitos.basicgenerator.name=Basic Generator
+tile.circuitos.basicwire.name=Basic Wire
+
+
+item.circuitos.creativemultimeter.name=Creative Multimeter
