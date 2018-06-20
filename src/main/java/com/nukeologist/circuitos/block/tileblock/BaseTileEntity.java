@@ -1,12 +1,14 @@
 package com.nukeologist.circuitos.block.tileblock;
 
 
+import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
 import com.nukeologist.circuitos.circuit.IGenerator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,7 +19,7 @@ public abstract class BaseTileEntity extends TileEntity {
 
     public IGenerator master;
     public boolean isMaster;
-    public List<BaseTileEntity> circuitBlocks;
+    public List<BaseTileEntity> circuitBlocks = new ArrayList<>();
 
     protected boolean hasChanged;
 
@@ -43,6 +45,11 @@ public abstract class BaseTileEntity extends TileEntity {
                     return;
                 }
             }
+            if(master == null) {
+                if(this instanceof IGenerator && this instanceof TileEntityBasicGenerator) {
+                    this.setMaster((TileEntityBasicGenerator)this);
+                }
+            }
         }
     }
 
@@ -56,10 +63,6 @@ public abstract class BaseTileEntity extends TileEntity {
             this.isMaster = false;
         }
 
-      //  for(EnumFacing d: EnumFacing.VALUES) {
-       //     TileEntity te = world.getTileEntity(new BlockPos(this.pos.getX() + d.getFrontOffsetX(), this.pos.getY() + d.getFrontOffsetY(), this.pos.getZ() + d.getFrontOffsetZ()));
-       //}
-        //shove all the info to the master
     }
 
     public boolean isMaster(){

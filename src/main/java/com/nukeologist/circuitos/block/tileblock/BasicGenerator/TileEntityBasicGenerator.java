@@ -20,6 +20,8 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super.readFromNBT(compound);
     }
 
+
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         return super.writeToNBT(compound);
@@ -30,6 +32,8 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         this.setFem(150);
         this.setResistance(10);
     }
+
+
 
 
     @Override

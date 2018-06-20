@@ -32,4 +32,9 @@ public class BlockBasicGenerator extends CircuitosBaseTile<TileEntityBasicGenera
     public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(world, pos, neighbor);
     }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
 }
