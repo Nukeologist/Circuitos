@@ -1,0 +1,13 @@
+itemGroup.circuitos=Circuitos
+
+
+tile.circuitos.basicgenerator.name=Gerador Basico
+tile.circuitos.basicwire.name=Fio Basico
+
+
+item.circuitos.creativemultimeter.name=Multimetro Criativo
+
+circuitos.message.fem=Forca Eletromotriz: %s
+circuitos.message.resistance=Resistencia: %s
+circuitos.message.capacitance=Capacitancia: %s
+circuitos.message.master=Mestre: %s

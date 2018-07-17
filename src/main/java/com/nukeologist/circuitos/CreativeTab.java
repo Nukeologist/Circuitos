@@ -1,8 +1,8 @@
 package com.nukeologist.circuitos;
 
+import com.nukeologist.circuitos.init.ModItems;
 import com.nukeologist.circuitos.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public class CreativeTab {
         @Override
         public ItemStack getTabIconItem() {
 
-            return new ItemStack(Items.COOKIE);
+            return new ItemStack(ModItems.itemCreativeMultimeter);
         }
 
         @Override
