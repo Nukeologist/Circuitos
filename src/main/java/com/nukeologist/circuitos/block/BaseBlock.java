@@ -56,51 +56,5 @@ public class BaseBlock extends Block {
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         super.onBlockAdded(worldIn, pos, state);
 
-        LogHelper.logInfo("Block added ");
-
-
-        TileEntity me = worldIn.getTileEntity(pos);
-
-        for(EnumFacing d: EnumFacing.VALUES) {
-            TileEntity te = worldIn.getTileEntity(new BlockPos(pos.getX() + d.getFrontOffsetX(), pos.getY() + d.getFrontOffsetY(), pos.getZ() + d.getFrontOffsetZ()));
-
-            if (te instanceof BaseTileEntity && me instanceof IGenerator) {
-                if (((BaseTileEntity) me).isMaster()) {
-                    ((BaseTileEntity) te).setMaster((IGenerator) me);
-                    ((BaseTileEntity) me).circuitBlocks.add((BaseTileEntity) te);
-                    return;
-                } else if (((BaseTileEntity) me).master != null) {
-                    ((BaseTileEntity) te).setMaster(((BaseTileEntity) me).master);
-                    if (((BaseTileEntity) me).master instanceof BaseTileEntity) {
-                        ((BaseTileEntity) ((BaseTileEntity) me).master).circuitBlocks.add((BaseTileEntity) te);
-                        return;
-                    }
-                } else if (((BaseTileEntity) me).master != null && ((BaseTileEntity) me).master != ((BaseTileEntity) te).master && ((BaseTileEntity) te).master != null) {
-                    if (((BaseTileEntity) me).master instanceof BaseTileEntity) {
-                        for (BaseTileEntity tee : ((BaseTileEntity) te).circuitBlocks) {
-                            tee.setMaster(((BaseTileEntity) me).master);
-                            ((BaseTileEntity) ((BaseTileEntity) me).master).circuitBlocks.add(tee);
-
-                        }
-                        ((BaseTileEntity) te).setMaster(((BaseTileEntity) me).master);
-
-                    }
-                }
-            } else if (te instanceof BaseTileEntity && me instanceof BaseTileEntity) {
-                if (((BaseTileEntity) me).master != null) {
-                    ((BaseTileEntity) te).setMaster(((BaseTileEntity) me).master);
-                    if (((BaseTileEntity) me).master instanceof BaseTileEntity) {
-                        ((BaseTileEntity) ((BaseTileEntity) me).master).circuitBlocks.add((BaseTileEntity) te);
-                        return;
-                    }
-                } else if (((BaseTileEntity) te).master != null && ((BaseTileEntity) me).master == null) {
-                    ((BaseTileEntity) me).setMaster(((BaseTileEntity) te).master);
-                    if (((BaseTileEntity) te).master instanceof BaseTileEntity) {
-                        ((BaseTileEntity) ((BaseTileEntity) te).master).circuitBlocks.add((BaseTileEntity) me);
-                        return;
-                    }
-                }
-            }
-        }
     }
 }

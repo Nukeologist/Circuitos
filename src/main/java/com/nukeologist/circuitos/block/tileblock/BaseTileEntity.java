@@ -34,23 +34,7 @@ public abstract class BaseTileEntity extends TileEntity {
     }
 
     public void constructMultiblock() {
-        if(master == null) {
-            for(EnumFacing d: EnumFacing.VALUES) {
-                TileEntity te = world.getTileEntity(new BlockPos(this.pos.getX() + d.getFrontOffsetX(), this.pos.getY() + d.getFrontOffsetY(), this.pos.getZ() + d.getFrontOffsetZ()));
-                if(te instanceof BaseTileEntity && ((BaseTileEntity) te).master != null) {
-                    this.setMaster(((BaseTileEntity) te).master);
-                    if(master instanceof BaseTileEntity) {
-                        ((BaseTileEntity) master).circuitBlocks.add(this);
-                    }
-                    return;
-                }
-            }
-            if(master == null) {
-                if(this instanceof IGenerator && this instanceof TileEntityBasicGenerator) {
-                    this.setMaster((TileEntityBasicGenerator)this);
-                }
-            }
-        }
+
     }
 
 

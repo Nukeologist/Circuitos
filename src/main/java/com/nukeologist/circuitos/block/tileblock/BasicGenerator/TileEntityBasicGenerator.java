@@ -40,13 +40,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     public void update() {
         if(world.getTotalWorldTime() % 80 == 0 && !(world.isRemote)) {
             LogHelper.logInfo("ticked");
-            if(this.master == null) {
-                constructMultiblock();
-            }
-            if(this.isMaster()) { //&& this.hasChanged
-                LogHelper.logInfo("I AM THE MASTAH, " + this.getPos());
-                //recaculate circuit nodes and voltages, dissipated energy, etc
-            }
+
         }
     }
 
