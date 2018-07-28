@@ -11,3 +11,5 @@ circuitos.message.fem=Electromotive Force: %s
 circuitos.message.resistance=Resistance: %s
 circuitos.message.capacitance=Capacitance: %s
 circuitos.message.master=Master: %s
+
+circuitos.container.basic_generator=Basic Generator

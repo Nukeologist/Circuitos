@@ -5,6 +5,8 @@ import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenera
 import com.nukeologist.circuitos.reference.Reference;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @GameRegistry.ObjectHolder(Reference.MOD_ID)
 public class ModBlocks {
@@ -18,6 +20,16 @@ public class ModBlocks {
     public static void registerModels() {
 
         basicGenerator.registerItemModel(Item.getItemFromBlock(basicGenerator));
-        basicWire.registerItemModel(Item.getItemFromBlock(basicWire));
+        //basicWire.registerItemModel(Item.getItemFromBlock(basicWire));
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void initModels() {
+        basicWire.initModel();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void initItemModels() {
+        basicWire.initItemModel();
     }
 }

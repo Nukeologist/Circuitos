@@ -19,7 +19,7 @@ public class ContainerBasicGenerator extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return false;
+        return this.te.isUsableByPlayer(playerIn);
     }
 
     @Override
@@ -32,8 +32,17 @@ public class ContainerBasicGenerator extends Container {
         super.detectAndSendChanges();
     }
 
+
+    //when stack is shift-clicked
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         return super.transferStackInSlot(playerIn, index);
     }
+
+    @Override
+    public void updateProgressBar(int id, int data) {
+        super.updateProgressBar(id, data);
+    }
+
+
 }
