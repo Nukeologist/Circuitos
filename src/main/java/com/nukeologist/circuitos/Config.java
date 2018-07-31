@@ -10,7 +10,7 @@ public class Config {
     private static final String CATEGORY_RESISTOR = "resistor";
     private static final String CATEGORY_GENERATOR = "generator";
 
-    public static boolean testBoolean = true;
+    public static boolean debug = true;
     public static String testString = "ye tester";
 
     public static void readConfig() {
@@ -34,7 +34,7 @@ public class Config {
     private static void initGeneralConfig(Configuration conf) {
 
         conf.addCustomCategoryComment(CATEGORY_GENERAL, "General config");
-        testBoolean = conf.getBoolean("testBoolean", CATEGORY_GENERAL, testBoolean, "Just a test true or false");
+        debug = conf.getBoolean("debug", CATEGORY_GENERAL, debug, "If debug is on, then more stuff to console...");
         testString = conf.getString("testString", CATEGORY_GENERAL, testString, "Just another test string");
 
     }

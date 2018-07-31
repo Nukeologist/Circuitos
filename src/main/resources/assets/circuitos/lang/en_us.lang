@@ -8,7 +8,7 @@ tile.circuitos.basicwire.name=Basic Wire
 item.circuitos.creativemultimeter.name=Creative Multimeter
 
 circuitos.message.fem=Electromotive Force: %s
-circuitos.message.resistance=Resistance: %s
+circuitos.message.resistance=Resistance: %s Ω
 circuitos.message.capacitance=Capacitance: %s
 circuitos.message.master=Master: %s
 

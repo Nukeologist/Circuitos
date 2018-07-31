@@ -2,6 +2,7 @@ package com.nukeologist.circuitos.block.tileblock.BasicGenerator;
 
 
 
+import com.nukeologist.circuitos.Config;
 import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.circuit.IGenerator;
 import com.nukeologist.circuitos.utility.LogHelper;
@@ -26,12 +27,12 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     private String customName;
 
-    private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY); //size: slots of inv without counting player
+    private NonNullList<ItemStack> inventory = NonNullList.withSize(2, ItemStack.EMPTY); //size: slots of inv without counting player
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        this.inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.inventory);
 
 
@@ -75,7 +76,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return (ItemStack)this.inventory.get(index );
+        return this.inventory.get(index );
     }
 
     @Override
@@ -90,7 +91,11 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
+        ItemStack itemstack = this.inventory.get(index);
+        boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
+        this.inventory.set(index, stack);
 
+        if(stack.getCount() > this.getInventoryStackLimit()) stack.setCount(this.getInventoryStackLimit());
     }
 
     @Override
@@ -100,8 +105,8 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     @Override
     public boolean isUsableByPlayer(EntityPlayer player) {
-        return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
-    }
+        return this.world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+    }//this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
 
     @Override
     public void openInventory(EntityPlayer player) {
@@ -165,7 +170,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     @Override
     public void update() {
-        if(world.getTotalWorldTime() % 80 == 0 && !(world.isRemote)) {
+        if(world.getTotalWorldTime() % 80 == 0 && !(world.isRemote) && Config.debug) {
             LogHelper.logInfo("ticked");
 
         }

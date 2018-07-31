@@ -1,6 +1,7 @@
 package com.nukeologist.circuitos.block;
 
 import com.nukeologist.circuitos.Circuitos;
+import com.nukeologist.circuitos.Config;
 import com.nukeologist.circuitos.CreativeTab;
 import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.circuit.IGenerator;
@@ -43,8 +44,9 @@ public class BaseBlock extends Block {
     public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(world, pos, neighbor);
 
-        LogHelper.logInfo("Neighbor changed! "+ pos.toString());
-
+        if(Config.debug) {
+            LogHelper.logInfo("Neighbor changed! " + pos.toString());
+        }
         TileEntity te = world.getTileEntity(neighbor);
         TileEntity me = world.getTileEntity(pos);
 
