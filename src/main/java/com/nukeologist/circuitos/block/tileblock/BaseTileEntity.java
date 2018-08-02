@@ -33,9 +33,7 @@ public abstract class BaseTileEntity extends TileEntity {
         return super.writeToNBT(compound);
     }
 
-    public void constructMultiblock() {
 
-    }
 
 
 

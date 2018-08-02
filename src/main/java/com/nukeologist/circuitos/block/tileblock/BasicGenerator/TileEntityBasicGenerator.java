@@ -11,6 +11,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -24,6 +26,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     private int resistance;
     private int fem;
+    public boolean analyzing;
 
     private String customName;
 
@@ -58,6 +61,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super();
         this.setFem(150);
         this.setResistance(10);
+        this.analyzing = false;
     }
 
     @Override
@@ -170,8 +174,8 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     @Override
     public void update() {
-        if(world.getTotalWorldTime() % 80 == 0 && !(world.isRemote) && Config.debug) {
-            LogHelper.logInfo("ticked");
+        if(world.getTotalWorldTime() % 80 == 0 && !(world.isRemote) && Config.debug && this.analyzing) {
+            LogHelper.logInfo("analyzing");
 
         }
     }
@@ -181,9 +185,9 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super.invalidate();
     }
 
-    @Override
+
     public void constructMultiblock() {
-        super.constructMultiblock();
+
     }
 
     @Override
@@ -212,4 +216,30 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     }
 
 
+    //TODO: sync client (after the packet, the server knows and the client doesnt)
+
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        SPacketUpdateTileEntity packet = super.getUpdatePacket();
+
+        NBTTagCompound tag = packet !=null ? packet.getNbtCompound(): new NBTTagCompound();
+        tag.setBoolean("analyze", this.analyzing);
+
+        return new SPacketUpdateTileEntity(pos, 1, tag );
+        //return super.getUpdatePacket();
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        super.onDataPacket(net, pkt);
+        NBTTagCompound tag =pkt.getNbtCompound();
+        this.analyzing = tag.getBoolean("analyze");
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        return super.getUpdateTag();
+    }
 }

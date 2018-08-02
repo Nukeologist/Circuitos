@@ -1,6 +1,8 @@
 package com.nukeologist.circuitos.client.gui;
 
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
+import com.nukeologist.circuitos.network.CircuitosPacketHandler;
+import com.nukeologist.circuitos.network.PacketGeneratorGUIUpdate;
 import com.nukeologist.circuitos.reference.Reference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -61,12 +63,13 @@ public class GUIBasicGenerator extends GuiContainer {
         button1.x = this.guiLeft + 30;
         button1.y = this.guiTop +60;
 
-        //updateButtons();
+        updateButtons();
     }
 
     public void updateButtons() {
-        if(button1.displayString == "Analyzing...") {
+        if(tileentity.analyzing) {
             button1.enabled = false;
+            button1.displayString = "Analyzing...";
         }
     }
 
@@ -75,6 +78,7 @@ public class GUIBasicGenerator extends GuiContainer {
         switch (button.id) {
             case 0:
                 button1.displayString = "Analyzing..."; //start the ANALYSIS!
+                CircuitosPacketHandler.INSTANCE.sendToServer(new PacketGeneratorGUIUpdate(tileentity.getPos().getX(), tileentity.getPos().getY(), tileentity.getPos().getZ(),"analyzing"));
                 break;
             case 1:
                 break;

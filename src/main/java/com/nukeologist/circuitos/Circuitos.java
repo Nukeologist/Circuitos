@@ -1,6 +1,7 @@
 package com.nukeologist.circuitos;
 
 import com.nukeologist.circuitos.handler.GUIHandler;
+import com.nukeologist.circuitos.network.CircuitosPacketHandler;
 import com.nukeologist.circuitos.proxy.CommonProxy;
 import com.nukeologist.circuitos.reference.Reference;
 import com.nukeologist.circuitos.utility.LogHelper;
@@ -36,6 +37,8 @@ public class Circuitos{
 
 
         NetworkRegistry.INSTANCE.registerGuiHandler(Circuitos.instance, new GUIHandler());
+
+        CircuitosPacketHandler.init();
 
         LogHelper.logInfo("Init complete!");
 

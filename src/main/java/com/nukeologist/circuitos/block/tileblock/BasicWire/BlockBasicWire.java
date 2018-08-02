@@ -124,6 +124,12 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
 
     //TODO: Check if its a "side" part of a generator and connect
     private boolean isSameBlock(IBlockAccess world, BlockPos pos) {
+        if(world.getBlockState(pos).getBlock() == ModBlocks.basicGenerator) {
+            //check if the side is "on/off"
+            return true;
+        }
         return world.getBlockState(pos).getBlock() == ModBlocks.basicWire;
     }
+
+
 }
