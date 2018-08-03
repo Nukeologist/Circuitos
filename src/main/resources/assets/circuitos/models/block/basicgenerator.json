@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "circuitos:blocks/basicgeneratorfront",
+    "down": "circuitos:blocks/basicgeneratordown",
+    "up": "circuitos:blocks/basicgeneratorup",
+    "east": "circuitos:blocks/basicgeneratorleft",
+    "west": "circuitos:blocks/basicgeneratorright",
+    "north": "circuitos:blocks/basicgeneratorfront",
+    "south": "circuitos:blocks/basicgeneratorback"
+  }
+}

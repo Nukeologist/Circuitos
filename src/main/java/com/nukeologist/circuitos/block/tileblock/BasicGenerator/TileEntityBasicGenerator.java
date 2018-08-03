@@ -27,6 +27,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     private int resistance;
     private int fem;
     public boolean analyzing;
+    public boolean readyToWork;
 
     private String customName;
 
@@ -62,6 +63,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         this.setFem(150);
         this.setResistance(10);
         this.analyzing = false;
+        this.readyToWork = false;
     }
 
     @Override
@@ -219,6 +221,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     //TODO: sync client (after the packet, the server knows and the client doesnt)
 
 
+
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
@@ -242,4 +245,5 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     public NBTTagCompound getUpdateTag() {
         return super.getUpdateTag();
     }
+
 }

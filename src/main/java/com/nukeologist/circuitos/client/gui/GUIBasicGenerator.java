@@ -21,7 +21,7 @@ public class GUIBasicGenerator extends GuiContainer {
 
     private int id = 0;
 
-    GuiButton button1;
+    GuiButton button1, button2;
 
     public GUIBasicGenerator(InventoryPlayer player, TileEntityBasicGenerator tileEntity) {
         super(new ContainerBasicGenerator(player, tileEntity));
@@ -52,6 +52,8 @@ public class GUIBasicGenerator extends GuiContainer {
     public void initGui() {
         buttonList.clear();
         buttonList.add(button1 = new GuiButton(newId(), 75, this.ySize - 80, 90, 20, "Analyze Circuitry"));
+        buttonList.add(button2 = new GuiButton(newId(), 0, 0, 30, 15, "Start"));
+        if(!tileentity.readyToWork) button2.enabled = false;
         super.initGui();
     }
 
@@ -62,6 +64,8 @@ public class GUIBasicGenerator extends GuiContainer {
         this.renderHoveredToolTip(mouseX, mouseY);
         button1.x = this.guiLeft + 30;
         button1.y = this.guiTop +60;
+        button2.x = this.guiLeft + 130;
+        button2.y = this.guiTop + 55;
 
         updateButtons();
     }
@@ -70,6 +74,7 @@ public class GUIBasicGenerator extends GuiContainer {
         if(tileentity.analyzing) {
             button1.enabled = false;
             button1.displayString = "Analyzing...";
+            button2.enabled = false;
         }
     }
 
@@ -80,7 +85,8 @@ public class GUIBasicGenerator extends GuiContainer {
                 button1.displayString = "Analyzing..."; //start the ANALYSIS!
                 CircuitosPacketHandler.INSTANCE.sendToServer(new PacketGeneratorGUIUpdate(tileentity.getPos().getX(), tileentity.getPos().getY(), tileentity.getPos().getZ(),"analyzing"));
                 break;
-            case 1:
+            case 1: //start doing the Circuit flow!
+
                 break;
         }
         updateButtons();

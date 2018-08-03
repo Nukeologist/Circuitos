@@ -26,6 +26,7 @@ public class ModBlocks {
     @SideOnly(Side.CLIENT)
     public static void initModels() {
         basicWire.initModel();
+        basicGenerator.initModel();
     }
 
     @SideOnly(Side.CLIENT)

@@ -1,8 +1,10 @@
 package com.nukeologist.circuitos.block.tileblock.BasicWire;
 
+import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
 import com.nukeologist.circuitos.block.tileblock.CircuitosBaseTile;
 import com.nukeologist.circuitos.init.ModBlocks;
 import com.nukeologist.circuitos.reference.Reference;
+import com.nukeologist.circuitos.utility.LogHelper;
 import com.nukeologist.circuitos.utility.UnlistedPropertyBoolean;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -106,12 +108,12 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
         //return super.getExtendedState(state, world, pos);
         IExtendedBlockState extendedBlockState = (IExtendedBlockState) state;
 
-        boolean north = isSameBlock(world, pos.north());
-        boolean south = isSameBlock(world, pos.south());
-        boolean west = isSameBlock(world, pos.west());
-        boolean east = isSameBlock(world, pos.east());
-        boolean up = isSameBlock(world, pos.up());
-        boolean down = isSameBlock(world, pos.down());
+        boolean north = isConnectable(world, pos.north(), "north");
+        boolean south = isConnectable(world, pos.south(), "south");
+        boolean west = isConnectable(world, pos.west(), "west");
+        boolean east = isConnectable(world, pos.east(), "east");
+        boolean up = isConnectable(world, pos.up(), "up");
+        boolean down = isConnectable(world, pos.down(), "down");
 
         return extendedBlockState
                 .withProperty(NORTH, north)
@@ -122,12 +124,36 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
                 .withProperty(DOWN, down);
     }
 
-    //TODO: Check if its a "side" part of a generator and connect
-    private boolean isSameBlock(IBlockAccess world, BlockPos pos) {
+    //TODO: fix interaction with up and down
+    private boolean isConnectable(IBlockAccess world, BlockPos pos, String enumpos) {
         if(world.getBlockState(pos).getBlock() == ModBlocks.basicGenerator) {
-            //check if the side is "on/off"
-            return true;
+            //LogHelper.logInfo(world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName());
+            switch (enumpos) {
+                case "north":
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("west")) return true;
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("east")) return true;
+                    break;
+                case "south":
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("west")) return true;
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("east")) return true;
+                    break;
+                case "east":
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("north")) return true;
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("south")) return true;
+                    break;
+                case "west":
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("north")) return true;
+                    if (world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName().equals("south")) return true;
+                    break;
+                case "up":
+                    LogHelper.logInfo("what? up");
+                    break;
+                case "down":
+                    LogHelper.logInfo("what? down");
+                    break;
+            }
         }
+
         return world.getBlockState(pos).getBlock() == ModBlocks.basicWire;
     }
 
