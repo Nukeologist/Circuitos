@@ -20,6 +20,7 @@
 # include git important files
 !.gitmodules
 !.gitignore
+!.gitattributes
 
 # code format to reduce noise in git commits
 !codeformat/
