@@ -34,7 +34,9 @@ public abstract class BaseTileEntity extends TileEntity {
     }
 
 
+    protected void constructMultiblock() {
 
+    }
 
 
     public void setMaster(IGenerator master) {

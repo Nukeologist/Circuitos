@@ -187,9 +187,9 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super.invalidate();
     }
 
-
-    public void constructMultiblock() {
-
+    @Override
+    protected void constructMultiblock() {
+        super.constructMultiblock();
     }
 
     @Override
@@ -218,10 +218,10 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     }
 
 
-    //TODO: sync client (after the packet, the server knows and the client doesnt)
 
 
 
+    //section to sync the client
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
@@ -231,7 +231,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         tag.setBoolean("analyze", this.analyzing);
 
         return new SPacketUpdateTileEntity(pos, 1, tag );
-        //return super.getUpdatePacket();
+
     }
 
     @Override
