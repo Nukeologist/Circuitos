@@ -67,9 +67,14 @@ public class BlockBasicGenerator extends CircuitosBaseTile<TileEntityBasicGenera
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(!worldIn.isRemote) {
-            playerIn.openGui(Circuitos.instance, Reference.GUI_BASIC_GENERATOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
+        if (worldIn.isRemote){
+
+            return true;
         }
+
+
+        playerIn.openGui(Circuitos.instance, Reference.GUI_BASIC_GENERATOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
+
         return true;
     }
 

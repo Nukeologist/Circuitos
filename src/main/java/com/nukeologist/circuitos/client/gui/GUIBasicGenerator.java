@@ -7,6 +7,7 @@ import com.nukeologist.circuitos.reference.Reference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,10 +33,9 @@ public class GUIBasicGenerator extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        //super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        //if(this.tileentity.getDisplayName().getUnformattedText() != null) {
-            String tileName = this.tileentity.getDisplayName().getUnformattedText();
-       //}
+
+        String tileName = I18n.format("circuitos.container.basic_generator");
+
         this.fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2) + 3, 8, 4210752);
         this.fontRenderer.drawString(this.player.getDisplayName().getUnformattedText(), 122, this.ySize - 96 + 2, 4210752);
 
