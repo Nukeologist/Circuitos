@@ -41,6 +41,7 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
         super(Material.CIRCUITS, name);
     }
 
+
     @Nullable
     @Override
     public TileEntityBasicWire createTileEntity(World world, IBlockState state) {

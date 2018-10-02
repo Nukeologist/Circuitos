@@ -1,27 +1,27 @@
 package com.nukeologist.circuitos.block.tileblock;
 
 
+
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
-import com.nukeologist.circuitos.circuit.IGenerator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public abstract class BaseTileEntity extends TileEntity {
 
 
-    private boolean firstRun = true;
+    public TileEntityBasicGenerator master;
 
-    public IGenerator master;
-    public boolean isMaster;
-    public List<BaseTileEntity> circuitBlocks = new ArrayList<>();
+    public void setMaster(TileEntityBasicGenerator master) {
+        this.master = master;
+        if(this.master == this && this instanceof TileEntityBasicGenerator) {
+            ((TileEntityBasicGenerator) this).isMaster = true;
+        }else {
+            if(this instanceof TileEntityBasicGenerator)((TileEntityBasicGenerator) this).isMaster = false;
+        }
 
-    protected boolean hasChanged;
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
@@ -39,18 +39,6 @@ public abstract class BaseTileEntity extends TileEntity {
     }
 
 
-    public void setMaster(IGenerator master) {
-        this.master = master;
-        if(this.master == this) {
-            this.isMaster = true;
-        }else {
-            this.isMaster = false;
-        }
 
-    }
-
-    public boolean isMaster(){
-        return isMaster;
-    }
 
 }

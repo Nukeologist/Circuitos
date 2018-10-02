@@ -4,9 +4,12 @@ import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.circuit.IResistor;
 
 
+
 public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
 
     private int resistance;
+
+
 
     public TileEntityBasicWire() {
         this.setResistance(1);

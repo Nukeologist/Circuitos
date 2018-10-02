@@ -7,7 +7,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -20,24 +19,8 @@ public class ContainerBasicGenerator extends Container {
         this.te = tileEntity;
         IItemHandler inventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-        addSlotToContainer(new SlotItemHandler(inventory, 0, 8 ,22) {
-            @Override
-            public void onSlotChanged() {
-                super.onSlotChanged();
-                tileEntity.markDirty();
-            }
-        });
-        addSlotToContainer(new SlotItemHandler(inventory, 1, 8 ,55) {
-            @Override
-            public void onSlotChanged() {
-                super.onSlotChanged();
-                tileEntity.markDirty();
-            }
-        });
-        //add slots
-        //this.addSlotToContainer(new Slot(tileEntity, 0, 8, 22  ));
-       // this.addSlotToContainer(new Slot(tileEntity, 1, 8, 55  ));
-
+        addSlotToContainer(new SlotItemHandler(inventory, 0, 8 ,22) );
+        addSlotToContainer(new SlotItemHandler(inventory, 1, 8 ,55) );
 
         for(int y = 0; y<3; y++){
             for(int x = 0; x<9; x++){
