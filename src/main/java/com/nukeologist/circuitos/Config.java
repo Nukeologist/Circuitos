@@ -22,7 +22,7 @@ public class Config {
             initResistorConfig(cfg);
 
         }catch(Exception e) {
-            LogHelper.logWarn("Problem while loading config!!", e);
+            LogHelper.logWarn("Problem while loading config!! ", e);
 
         }finally {
             if(cfg.hasChanged()) {

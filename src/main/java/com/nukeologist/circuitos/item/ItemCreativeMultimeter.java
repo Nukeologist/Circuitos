@@ -47,8 +47,9 @@ public class ItemCreativeMultimeter extends BaseItem {
             }else if(te instanceof ICapacitor) {
                 player.sendMessage(new TextComponentString(I18n.format("circuitos.message.capacitance", ((ICapacitor) te).getCapacity())));
             }
-            if (te instanceof BaseTileEntity) {
-                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.master", ((BaseTileEntity) te).master)));
+            if (te instanceof BaseTileEntity && ((BaseTileEntity) te).master != null) {
+
+                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.master", ((BaseTileEntity) te).master.getPos().toString())));
 
 
             }

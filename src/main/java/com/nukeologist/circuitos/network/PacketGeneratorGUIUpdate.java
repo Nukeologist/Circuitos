@@ -76,10 +76,18 @@ public class PacketGeneratorGUIUpdate implements IMessage {
 
             World world = ctx.getServerHandler().player.world;
             LogHelper.logInfo(message.mess);
-            if(message.mess.equals("analyzing")) {   //for some reason this doesnt work
+            if(message.mess.equals("analyzing")) {
                 TileEntity te = world.getTileEntity(new BlockPos(message.x, message.y, message.z));
                 if(te instanceof TileEntityBasicGenerator) {
                     ((TileEntityBasicGenerator) te).analyzing = true;
+                    world.notifyBlockUpdate(te.getPos(), world.getBlockState(te.getPos()), world.getBlockState(te.getPos()), 1 );
+                    world.scheduleBlockUpdate(te.getPos(), te.getBlockType(), 0, 0);
+                    te.markDirty();
+                }
+            }else if(message.mess.equals("!analyzing")){
+                TileEntity te = world.getTileEntity(new BlockPos(message.x, message.y, message.z));
+                if(te instanceof TileEntityBasicGenerator) {
+                    ((TileEntityBasicGenerator) te).analyzing = false;
                     world.notifyBlockUpdate(te.getPos(), world.getBlockState(te.getPos()), world.getBlockState(te.getPos()), 1 );
                     world.scheduleBlockUpdate(te.getPos(), te.getBlockType(), 0, 0);
                     te.markDirty();

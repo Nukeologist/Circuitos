@@ -126,7 +126,7 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
     }
 
     //TODO: fix interaction with up and down
-    private boolean isConnectable(IBlockAccess world, BlockPos pos, String enumpos) {
+    public boolean isConnectable(IBlockAccess world, BlockPos pos, String enumpos) {
         if(world.getBlockState(pos).getBlock() == ModBlocks.basicGenerator) {
             //LogHelper.logInfo(world.getBlockState(pos).getValue(BlockBasicGenerator.FACING).getName());
             switch (enumpos) {

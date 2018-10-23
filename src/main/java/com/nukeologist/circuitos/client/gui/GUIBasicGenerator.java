@@ -75,6 +75,11 @@ public class GUIBasicGenerator extends GuiContainer {
             button1.enabled = false;
             button1.displayString = "Analyzing...";
             button2.enabled = false;
+        }else {
+            button1.enabled = true;
+            button1.displayString = "Analyze Circuitry";
+            button2.enabled = true;
+
         }
     }
 
