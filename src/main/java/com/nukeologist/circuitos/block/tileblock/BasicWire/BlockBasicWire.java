@@ -2,6 +2,7 @@ package com.nukeologist.circuitos.block.tileblock.BasicWire;
 
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
 import com.nukeologist.circuitos.block.tileblock.CircuitosBaseTile;
+import com.nukeologist.circuitos.client.WireBakedModel;
 import com.nukeologist.circuitos.init.ModBlocks;
 import com.nukeologist.circuitos.reference.Reference;
 import com.nukeologist.circuitos.utility.LogHelper;
@@ -69,7 +70,7 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                return null;
+                return WireBakedModel.BAKED_MODEL;
             }
         };
         ModelLoader.setCustomStateMapper(this, ignoreState);
@@ -81,7 +82,7 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
         Item itemBlock = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID, "basicwire"));
         ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(getRegistryName(), "inventory");
         final int DEFAULT_ITEM_SUBTYPE = 0;
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(itemBlock, DEFAULT_ITEM_SUBTYPE, itemModelResourceLocation);
+        ModelLoader.setCustomModelResourceLocation(itemBlock, DEFAULT_ITEM_SUBTYPE, itemModelResourceLocation);
     }
 
     @SuppressWarnings("deprecation")

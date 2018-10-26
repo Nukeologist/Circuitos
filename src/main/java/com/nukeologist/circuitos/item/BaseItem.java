@@ -11,9 +11,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BaseItem extends Item {
 
     public BaseItem(String name) {
-        setUnlocalizedName(Reference.MOD_ID + "." +name);
+        //setUnlocalizedName(Reference.MOD_ID + "." +name);
         setRegistryName(name);
         setCreativeTab(CreativeTab.CIRCUITOS_TAB);
+        this.setTranslationKey(Reference.MOD_ID +  "." + name);
 
 
     }

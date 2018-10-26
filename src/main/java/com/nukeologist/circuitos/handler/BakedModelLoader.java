@@ -2,6 +2,7 @@ package com.nukeologist.circuitos.handler;
 
 import com.nukeologist.circuitos.client.WireModel;
 import com.nukeologist.circuitos.reference.Reference;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
@@ -13,7 +14,9 @@ public class BakedModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        return modelLocation.getResourceDomain().equals(Reference.MOD_ID) && "basicwire".equals(modelLocation.getResourcePath());
+        if (modelLocation instanceof ModelResourceLocation && ((ModelResourceLocation)modelLocation).getVariant().equals("inventory")) return false;
+
+        return modelLocation.getNamespace().equals(Reference.MOD_ID) && "basicwire".equals(modelLocation.getPath());
     }
 
     @Override

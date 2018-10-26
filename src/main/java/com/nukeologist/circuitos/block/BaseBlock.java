@@ -32,7 +32,8 @@ public class BaseBlock extends Block {
         this.setCreativeTab(CreativeTab.CIRCUITOS_TAB);
         this.name = name;
         this.setRegistryName(name);
-        this.setUnlocalizedName(Reference.MOD_ID +  "." + name);
+        //this.setUnlocalizedName(Reference.MOD_ID +  "." + name);
+        this.setTranslationKey(Reference.MOD_ID +  "." + name);
 
     }
 

@@ -20,7 +20,7 @@ public class ModBlocks {
     public static void registerModels() {
 
         basicGenerator.registerItemModel(Item.getItemFromBlock(basicGenerator));
-        //basicWire.registerItemModel(Item.getItemFromBlock(basicWire));
+        basicWire.registerItemModel(Item.getItemFromBlock(basicWire));
     }
 
     @SideOnly(Side.CLIENT)

@@ -18,8 +18,7 @@ public class CreativeTab {
         private ItemSorter itemSorter = new ItemSorter();
 
         @Override
-        public ItemStack getTabIconItem() {
-
+        public ItemStack createIcon() {
             return new ItemStack(ModItems.itemCreativeMultimeter);
         }
 
