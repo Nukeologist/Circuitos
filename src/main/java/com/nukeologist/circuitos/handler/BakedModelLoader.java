@@ -21,6 +21,7 @@ public class BakedModelLoader implements ICustomModelLoader {
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) {
+        //if(modelLocation.getPath.equals("basicwire"))return WIRE_MODEL;
         return WIRE_MODEL;
     }
 

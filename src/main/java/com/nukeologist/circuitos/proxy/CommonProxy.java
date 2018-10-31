@@ -1,6 +1,8 @@
 package com.nukeologist.circuitos.proxy;
 
 import com.nukeologist.circuitos.Config;
+import com.nukeologist.circuitos.block.tileblock.BasicResistor.BlockBasicResistor;
+import com.nukeologist.circuitos.block.tileblock.BasicResistor.TileEntityBasicResistor;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.BlockBasicWire;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
@@ -44,25 +46,28 @@ public class CommonProxy {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
 
+        //Blocks
         event.getRegistry().register(new BlockBasicGenerator("basicgenerator"));
         event.getRegistry().register(new BlockBasicWire("basicwire"));
+        event.getRegistry().register(new BlockBasicResistor("basicresistor"));
 
 
-        //GameRegistry.registerTileEntity(TileEntityBasicGenerator.class, "basicgenerator");
-        //GameRegistry.registerTileEntity(TileEntityBasicWire.class,  "basicwire");//tileentity.register?
+        //Tile Entities
         TileEntity.register("circuitos:basicgenerator", TileEntityBasicGenerator.class);
         TileEntity.register("circuitos:basicwire", TileEntityBasicWire.class);
+        TileEntity.register("circuitos:basicresistor", TileEntityBasicResistor.class);
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
 
-
+        //Items
         event.getRegistry().register(new ItemCreativeMultimeter("creativemultimeter"));
 
-
+        //ItemBlocks
         event.getRegistry().register(new ItemBlock(ModBlocks.basicGenerator).setRegistryName(ModBlocks.basicGenerator.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.basicWire).setRegistryName(ModBlocks.basicWire.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.basicResistor).setRegistryName(ModBlocks.basicResistor.getRegistryName()));
 
     }
 

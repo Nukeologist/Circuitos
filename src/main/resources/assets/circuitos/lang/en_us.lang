@@ -3,6 +3,7 @@ itemGroup.circuitos=Circuitos
 
 tile.circuitos.basicgenerator.name=Basic Generator
 tile.circuitos.basicwire.name=Basic Wire
+tile.circuitos.basicresistor.name=Basic Resistor
 
 
 item.circuitos.creativemultimeter.name=Creative Multimeter

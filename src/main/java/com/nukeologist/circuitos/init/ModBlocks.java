@@ -1,5 +1,6 @@
 package com.nukeologist.circuitos.init;
 
+import com.nukeologist.circuitos.block.tileblock.BasicResistor.BlockBasicResistor;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.BlockBasicWire;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
 import com.nukeologist.circuitos.reference.Reference;
@@ -17,16 +18,22 @@ public class ModBlocks {
     @GameRegistry.ObjectHolder("circuitos:basicwire")
     public static BlockBasicWire basicWire;
 
+    @GameRegistry.ObjectHolder("circuitos:basicresistor")
+    public static BlockBasicResistor basicResistor;
+
+
     public static void registerModels() {
 
         basicGenerator.registerItemModel(Item.getItemFromBlock(basicGenerator));
         basicWire.registerItemModel(Item.getItemFromBlock(basicWire));
+        basicResistor.registerItemModel(Item.getItemFromBlock(basicResistor));
     }
 
     @SideOnly(Side.CLIENT)
     public static void initModels() {
         basicWire.initModel();
         basicGenerator.initModel();
+        //basicResistor.initModel();
     }
 
     @SideOnly(Side.CLIENT)
