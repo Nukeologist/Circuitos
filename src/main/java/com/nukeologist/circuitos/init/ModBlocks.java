@@ -33,11 +33,12 @@ public class ModBlocks {
     public static void initModels() {
         basicWire.initModel();
         basicGenerator.initModel();
-        //basicResistor.initModel();
+        basicResistor.initModel();
     }
 
     @SideOnly(Side.CLIENT)
     public static void initItemModels() {
         basicWire.initItemModel();
+        basicResistor.initItemModel();
     }
 }

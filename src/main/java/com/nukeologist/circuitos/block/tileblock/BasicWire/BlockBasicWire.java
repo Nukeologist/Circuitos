@@ -155,6 +155,8 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
             }
         }
 
+        if(world.getBlockState(pos).getBlock() == ModBlocks.basicWire) return true;
+        //TODO: IF IS CONNECTABLE TO RESISTOR, RETURN TRUE;
         return world.getBlockState(pos).getBlock() == ModBlocks.basicWire;
     }
 

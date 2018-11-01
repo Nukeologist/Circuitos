@@ -33,7 +33,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     public List<BaseTileEntity> allCircuitList = new ArrayList<>();
 
-    protected  int index = 0;
+    protected int index = 0;
 
     public boolean isMaster;
 
@@ -73,23 +73,13 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
             LogHelper.logInfo("" + machineList.size());
             LogHelper.logInfo(allCircuitList.toString());
             LogHelper.logInfo("" + allCircuitList.size());
+            LogHelper.logInfo(""+ this.graph.toString());
         }
     }
 
     private void doIt(BaseTileEntity tileEntity){
         while(!wiresToLook.empty()) {
 
-            /*
-            if(tileEntity != null ){
-
-                if(!(tileEntity instanceof TileEntityBasicWire)){
-                    tempMachineList.add(tileEntity);
-                    tileEntity.setMaster(this);
-
-
-                }
-            }
-            */
             tileEntity = wiresToLook.pop();
             canAnalyze(tileEntity, index);
 

@@ -60,7 +60,7 @@ public abstract class BaseTileEntity extends TileEntity {
                 if(wire.isConnectable(world, secondTE.pos, enumPos)){
                     return true;
                 }
-            }
+            }//now for Resistor:
         }
 
 
