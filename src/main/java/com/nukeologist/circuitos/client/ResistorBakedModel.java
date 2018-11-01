@@ -46,8 +46,8 @@ public class ResistorBakedModel implements IBakedModel {
         Boolean up = extendedBlockState.getValue(BlockBasicResistor.UP);
         Boolean down = extendedBlockState.getValue(BlockBasicResistor.DOWN);
         List<BakedQuad> quads = new ArrayList<>();
-        double o = .4;
-        //TODO: CHANGE THIS SO IT LOOKS MORE "RESISTOR-LIKE"!
+        double o = .35; //CHANGE THIS FOR SIZE (DEFAULT: .4)
+
         // For each side we either cap it off if there is no similar block adjacent on that side
         // or else we extend so that we touch the adjacent block:
 

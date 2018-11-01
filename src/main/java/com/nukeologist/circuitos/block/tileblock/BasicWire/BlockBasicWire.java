@@ -1,6 +1,7 @@
 package com.nukeologist.circuitos.block.tileblock.BasicWire;
 
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
+import com.nukeologist.circuitos.block.tileblock.BasicResistor.BlockBasicResistor;
 import com.nukeologist.circuitos.block.tileblock.CircuitosBaseTile;
 import com.nukeologist.circuitos.client.WireBakedModel;
 import com.nukeologist.circuitos.init.ModBlocks;
@@ -155,8 +156,33 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
             }
         }
 
-        if(world.getBlockState(pos).getBlock() == ModBlocks.basicWire) return true;
-        //TODO: IF IS CONNECTABLE TO RESISTOR, RETURN TRUE;
+
+        if(world.getBlockState(pos).getBlock() == ModBlocks.basicResistor) {
+            IBlockState state = ModBlocks.basicResistor.getExtendedState(world.getBlockState(pos), world, pos);
+            IExtendedBlockState extendedBlockState = (IExtendedBlockState) state;
+
+            switch (enumpos) {
+                case "north":
+                    if (extendedBlockState.getValue(BlockBasicResistor.SOUTH)) return true;
+                    break;
+                case "south":
+                    if (extendedBlockState.getValue(BlockBasicResistor.NORTH)) return true;
+                    break;
+                case "east":
+                    if (extendedBlockState.getValue(BlockBasicResistor.WEST)) return true;
+                    break;
+                case "west":
+                    if (extendedBlockState.getValue(BlockBasicResistor.EAST)) return true;
+                    break;
+                case "up":
+                    if (extendedBlockState.getValue(BlockBasicResistor.DOWN)) return true;
+                    break;
+                case "down":
+                    if (extendedBlockState.getValue(BlockBasicResistor.UP)) return true;
+                    break;
+            }
+
+        }
         return world.getBlockState(pos).getBlock() == ModBlocks.basicWire;
     }
 

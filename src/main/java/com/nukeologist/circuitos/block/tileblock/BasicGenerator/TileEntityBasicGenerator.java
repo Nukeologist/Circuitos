@@ -28,9 +28,9 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     private ItemStackHandler inventory = new ItemStackHandler(2);
     private CircuitGraph graph = new CircuitGraph();
     private Stack<TileEntityBasicWire> wiresToLook = new Stack<>();
-    private List<BaseTileEntity> machineList = new ArrayList<>();
     private List<BaseTileEntity> tempMachineList = new ArrayList<>();
 
+    public List<BaseTileEntity> machineList = new ArrayList<>();
     public List<BaseTileEntity> allCircuitList = new ArrayList<>();
 
     protected int index = 0;

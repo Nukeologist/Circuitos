@@ -3,6 +3,7 @@ package com.nukeologist.circuitos.block.tileblock;
 
 
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
+import com.nukeologist.circuitos.block.tileblock.BasicResistor.TileEntityBasicResistor;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.BlockBasicWire;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.TileEntityBasicWire;
 import net.minecraft.block.Block;
@@ -61,8 +62,25 @@ public abstract class BaseTileEntity extends TileEntity {
                     return true;
                 }
             }//now for Resistor:
+        }else if(firstTE instanceof TileEntityBasicWire && secondTE instanceof TileEntityBasicResistor){
+            Block block = world.getBlockState(firstTE.pos).getBlock();
+            BlockBasicWire wire;
+            if(block instanceof BlockBasicWire){
+                wire = (BlockBasicWire) block;
+                if(wire.isConnectable(world, secondTE.pos, enumPos)){
+                    return true;
+                }
+            }
+        }else if(firstTE instanceof TileEntityBasicResistor && secondTE instanceof TileEntityBasicWire){
+            Block block = world.getBlockState(secondTE.pos).getBlock();
+            BlockBasicWire wire;
+            if(block instanceof BlockBasicWire){
+                wire = (BlockBasicWire) block;
+                if(wire.isConnectable(world, firstTE.pos, enumPos)){
+                    return true;
+                }
+            }
         }
-
 
         return false;
     }

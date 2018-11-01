@@ -1,6 +1,5 @@
 package com.nukeologist.circuitos.block.tileblock.BasicResistor;
 
-import com.nukeologist.circuitos.block.tileblock.BasicWire.TileEntityBasicWire;
 import com.nukeologist.circuitos.block.tileblock.CircuitosBaseTile;
 import com.nukeologist.circuitos.client.ResistorBakedModel;
 import com.nukeologist.circuitos.init.ModBlocks;
@@ -13,7 +12,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;

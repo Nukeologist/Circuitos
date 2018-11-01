@@ -24,7 +24,7 @@ public class EventHandler {
 
         LogHelper.logInfo("Aqui!: " + pos.toString());
         TileEntity te = world.getTileEntity(pos);
-        //se for master, tem que avisar TODOS os slaves.
+        //if it is the master, we must warn ALL the slaves.
         if (te instanceof TileEntityBasicGenerator) {
             if (((TileEntityBasicGenerator) te).isMaster()) {
                 for (BaseTileEntity tile : ((TileEntityBasicGenerator) te).allCircuitList) {
@@ -33,6 +33,7 @@ public class EventHandler {
 
                 }
                 ((TileEntityBasicGenerator) te).allCircuitList.clear();
+                ((TileEntityBasicGenerator) te).machineList.clear();
                 return;
             }
         } else if (te instanceof TileEntityBasicWire && !(te instanceof TileEntityBasicGenerator)) {
@@ -45,6 +46,7 @@ public class EventHandler {
 
                 }
                 ((TileEntityBasicWire) te).master.allCircuitList.clear();
+                ((TileEntityBasicWire) te).master.machineList.clear();
             }
         }
 
