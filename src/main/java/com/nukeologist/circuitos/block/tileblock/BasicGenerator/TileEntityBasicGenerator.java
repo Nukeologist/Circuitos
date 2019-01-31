@@ -4,9 +4,11 @@ package com.nukeologist.circuitos.block.tileblock.BasicGenerator;
 import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.TileEntityBasicWire;
 import com.nukeologist.circuitos.circuit.*;
+import com.nukeologist.circuitos.init.ModBlocks;
 import com.nukeologist.circuitos.network.CircuitosPacketHandler;
 import com.nukeologist.circuitos.network.PacketGeneratorGUIUpdate;
 import com.nukeologist.circuitos.utility.LogHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -24,29 +26,34 @@ import java.util.*;
 
 public class TileEntityBasicGenerator extends BaseTileEntity implements ITickable, IGenerator {
 
-    private int resistance, fem;
+    private int resistance, fem, genIndex;
     private ItemStackHandler inventory = new ItemStackHandler(2);
-    private CircuitGraph graph = new CircuitGraph();
     private Stack<TileEntityBasicWire> wiresToLook = new Stack<>();
     private List<BaseTileEntity> tempMachineList = new ArrayList<>();
 
     public List<BaseTileEntity> machineList = new ArrayList<>();
     public List<BaseTileEntity> allCircuitList = new ArrayList<>();
 
+
+    public CircuitGraph getGraph() {
+        return graph;
+    }
+
+    private CircuitGraph graph = new CircuitGraph();
+
     protected int index = 0;
 
-    public boolean isMaster;
+    public boolean isMaster; //violates encapsulation principle
 
     public boolean analyzing, readyToWork;
 
     @Override
     public void update() {
         if(world.getTotalWorldTime() % 80 == 0 && !(world.isRemote) && this.analyzing) {
-            LogHelper.logInfo("analyzing");
+            LogHelper.logInfo("TE @" + this.getPos().toString() + " is analyzing circuit.");
             this.setMaster(this);
             this.analyzing = false;
             this.analyzed = true;
-            this.graph.nodes.add(new CircuitNode(index));
             BaseTileEntity tileEntity;
             canAnalyze(this, index);
             doIt(this);
@@ -57,14 +64,19 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
                 tempMachineList.clear();
 
                 for(BaseTileEntity machine : machineList){
-                    this.graph.nodes.add(new CircuitNode(newIndex()));
+                    //this.graph.nodes.add(new CircuitNode(newIndex()));
                     canAnalyze(machine, index);
                     doIt(machine);
                 }
 
             }
+            machineList.add(this); //usually doesnt add itself
             CircuitosPacketHandler.INSTANCE.sendToServer(new PacketGeneratorGUIUpdate(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(),"!analyzing"));
-
+            if(!readyToWork){
+                CircuitSolver solver = new CircuitSolver(this);
+                solver.solveCircuit();
+                readyToWork = true;
+            }
         }
 
         if(!this.analyzing && world.getTotalWorldTime() % 80 == 0 && !world.isRemote){
@@ -73,13 +85,18 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
             LogHelper.logInfo("" + machineList.size());
             LogHelper.logInfo(allCircuitList.toString());
             LogHelper.logInfo("" + allCircuitList.size());
-            LogHelper.logInfo(""+ this.graph.toString());
-        }
-    }
+            LogHelper.logInfo(Integer.toString(this.getGraph().getNodes().size()));
 
+            IBlockState genBlock = world.getBlockState(getPos());
+            EnumFacing blockFacing = genBlock.getValue(BlockBasicGenerator.FACING);
+            LogHelper.logInfo("this gen is facing " + blockFacing.getName());
+
+        }
+
+    }
+    /*Method was used a lot */
     private void doIt(BaseTileEntity tileEntity){
         while(!wiresToLook.empty()) {
-
             tileEntity = wiresToLook.pop();
             canAnalyze(tileEntity, index);
 
@@ -87,6 +104,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         }
     }
 
+    /*Analyzes and starts a graph */
     private void canAnalyze(BaseTileEntity te, int nodeIndex){
 
         for(EnumFacing facing : EnumFacing.VALUES){
@@ -97,7 +115,6 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
                     wiresToLook.push((TileEntityBasicWire) teToAnalyze);
                     ((TileEntityBasicWire) teToAnalyze).analyzed = true;
                     ((TileEntityBasicWire) teToAnalyze).setMaster(this);
-                    ((TileEntityBasicWire) teToAnalyze).nodeIndex = index;
                     this.allCircuitList.add((BaseTileEntity) teToAnalyze);
 
 
@@ -106,7 +123,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
                 if(isPartOfCircuit(te, (BaseTileEntity) teToAnalyze, facing.getName()) && !(((BaseTileEntity) teToAnalyze).analyzed)){
                     ((BaseTileEntity) teToAnalyze).analyzed = true;
                     ((BaseTileEntity) teToAnalyze).setMaster(this);
-                    this.graph.nodes.get(nodeIndex).connections.add(new CircuitEdge( te, (BaseTileEntity)teToAnalyze));
+                    //this.graph.nodes.get(nodeIndex).connections.add(new CircuitEdge( te, (BaseTileEntity)teToAnalyze));
                     this.allCircuitList.add((BaseTileEntity) teToAnalyze);
                     this.tempMachineList.add((BaseTileEntity) teToAnalyze);
 
@@ -119,9 +136,17 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     }
 
+    public void setGenIndex(int genIndex) {
+        this.genIndex = genIndex;
+    }
 
+    public int getGenIndex() {
+        return genIndex;
+    }
 
-
+    public void setGraph(CircuitGraph graph) {
+        this.graph = graph;
+    }
 
     public boolean isMaster(){
         return isMaster;
@@ -149,6 +174,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         return ret;
     }
 
+    /*Capabilities */
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
@@ -160,6 +186,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inventory) : super.getCapability(capability, facing);
     }
 
+    /*Constructor */
     public TileEntityBasicGenerator() {
         super();
         this.setFem(150);
@@ -175,7 +202,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super.invalidate();
     }
 
-
+    /*IGenerator business */
 
     @Override
     public void setFem(int fem) {
@@ -207,9 +234,6 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     }
 
 
-
-
-
     //section to sync the client
     @Nullable
     @Override
@@ -218,6 +242,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
         NBTTagCompound tag = packet !=null ? packet.getNbtCompound(): new NBTTagCompound();
         tag.setBoolean("analyze", this.analyzing);
+        tag.setBoolean("readytowork", this.readyToWork);
 
         return new SPacketUpdateTileEntity(pos, 1, tag );
 
@@ -228,6 +253,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super.onDataPacket(net, pkt);
         NBTTagCompound tag =pkt.getNbtCompound();
         this.analyzing = tag.getBoolean("analyze");
+        this.readyToWork = tag.getBoolean("readytowork");
     }
 
     @Override

@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -30,12 +31,16 @@ import javax.annotation.Nullable;
 
 public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
 
+    public static final AxisAlignedBB BASICWIRE_AABB = new AxisAlignedBB(4/16D, 4/16D, 4/16D, 12/16D, 12/16D, 12/16D);
+
     public static final UnlistedPropertyBoolean NORTH = new UnlistedPropertyBoolean("north");
     public static final UnlistedPropertyBoolean SOUTH = new UnlistedPropertyBoolean("south");
     public static final UnlistedPropertyBoolean WEST = new UnlistedPropertyBoolean("west");
     public static final UnlistedPropertyBoolean EAST = new UnlistedPropertyBoolean("east");
     public static final UnlistedPropertyBoolean UP = new UnlistedPropertyBoolean("up");
     public static final UnlistedPropertyBoolean DOWN = new UnlistedPropertyBoolean("down");
+
+
 
 
     public BlockBasicWire(String name) {
@@ -96,6 +101,14 @@ public class BlockBasicWire extends CircuitosBaseTile<TileEntityBasicWire> {
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
+
+    //TODO: FIX BOX
+    @SuppressWarnings("deprecation")
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        
+        return BASICWIRE_AABB;
+}
 
     @Override
     protected BlockStateContainer createBlockState() {

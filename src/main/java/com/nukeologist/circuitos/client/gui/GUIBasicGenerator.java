@@ -70,12 +70,16 @@ public class GUIBasicGenerator extends GuiContainer {
         updateButtons();
     }
 
-    public void updateButtons() {
+    private void updateButtons() {
         if(tileentity.analyzing) {
             button1.enabled = false;
             button1.displayString = "Analyzing...";
             button2.enabled = false;
+        }else if(tileentity.readyToWork){
+            button1.enabled = false;
+            button2.enabled = true;
         }else {
+
             button1.enabled = true;
             button1.displayString = "Analyze Circuitry";
             button2.enabled = true;

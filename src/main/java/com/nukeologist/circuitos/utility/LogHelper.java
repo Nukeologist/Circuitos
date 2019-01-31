@@ -31,7 +31,6 @@ public class LogHelper {
     }
 
     public static void logDebug(String msg) {
-
         LOGGER.debug(mod + msg);
     }
 

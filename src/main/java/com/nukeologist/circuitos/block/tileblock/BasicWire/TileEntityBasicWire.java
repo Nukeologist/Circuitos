@@ -8,7 +8,7 @@ import com.nukeologist.circuitos.circuit.IResistor;
 public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
 
     private int resistance;
-    public int nodeIndex;
+    private int nodeIndex;
 
 
 
@@ -29,5 +29,13 @@ public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
     @Override
     public int getResistance() {
         return resistance;
+    }
+
+    public int getNodeIndex() {
+        return nodeIndex;
+    }
+
+    public void setNodeIndex(int nodeIndex) {
+        this.nodeIndex = nodeIndex;
     }
 }
