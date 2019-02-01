@@ -1,5 +1,6 @@
 package com.nukeologist.circuitos.circuit;
 
+import com.mathworks.Jama.Matrix;
 import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
@@ -33,6 +34,7 @@ public class CircuitSolver {
     private Stack<TileEntityBasicWire> tempWireStack;
     private CircuitGraph graph;
     private Map<TileEntityBasicWire, Integer> wireNodeIndexMap;
+    private Matrix aMatrix, xMatrix, zMatrix;
 
     public CircuitSolver(TileEntityBasicGenerator master) {
         this.master = master;
@@ -194,8 +196,26 @@ public class CircuitSolver {
         }
         //A matrix now done, rest is 0s because of no dependant current/voltage sources.
 
+        //The X matrix is the answer, so we need to make the Z matrix.
 
+        for (BaseTileEntity te : master.machineList) {
+            if (te instanceof TileEntityBasicGenerator) {
+                TileEntityBasicGenerator gen = (TileEntityBasicGenerator) te;
+                int index = gen.getGenIndex();
 
+                Z[nodes - 1 + index][0] = gen.getFem();
+                //First part of the vector/matrix is 0s because of lack of current sources
+            }
+        }//Making the Matrix objects
+
+        aMatrix = new Matrix(A);
+        zMatrix = new Matrix(Z);
+
+        //This solves everything
+        xMatrix = aMatrix.inverse().times(zMatrix);
+
+        LogHelper.logInfo("matrix solved, @" + master.getPos().toString());
+        //Now we assign current to each block/tile, and also a Voltage for each node.
     }
 
     private int getNodeNumbers(){

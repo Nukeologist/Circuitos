@@ -81,11 +81,9 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
         if(!this.analyzing && world.getTotalWorldTime() % 80 == 0 && !world.isRemote){
             LogHelper.logInfo("Not analyzing: ");
-            LogHelper.logInfo(machineList.toString());
-            LogHelper.logInfo("" + machineList.size());
-            LogHelper.logInfo(allCircuitList.toString());
-            LogHelper.logInfo("" + allCircuitList.size());
-            LogHelper.logInfo(Integer.toString(this.getGraph().getNodes().size()));
+            LogHelper.logInfo("Machine list size: " + machineList.size());
+            LogHelper.logInfo("Circuit size: " + allCircuitList.size());
+            LogHelper.logInfo("Nodes: " + this.getGraph().getNodes().size());
 
             IBlockState genBlock = world.getBlockState(getPos());
             EnumFacing blockFacing = genBlock.getValue(BlockBasicGenerator.FACING);
