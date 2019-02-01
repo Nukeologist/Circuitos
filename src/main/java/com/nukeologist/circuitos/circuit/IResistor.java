@@ -13,4 +13,6 @@ public interface IResistor {
     int getDissipatedEnergy();
 
 
+    double getCurrent();
+
 }

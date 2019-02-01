@@ -227,6 +227,11 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         return 0;
     }
 
+    @Override
+    public double getCurrent() {
+        return 0;
+    }
+
     private int newIndex(){
         return ++index ;
     }

@@ -14,6 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class ItemCreativeMultimeter extends BaseItem {
@@ -40,16 +41,20 @@ public class ItemCreativeMultimeter extends BaseItem {
         TileEntity te = worldIn.getTileEntity(pos);
         if(!worldIn.isRemote) {
             if (te instanceof IGenerator) {
-                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.fem", ((IGenerator) te).getFem())));
-                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.resistance", ((IGenerator) te).getResistance())));
+                IGenerator generator = (IGenerator) te;
+                player.sendMessage(new TextComponentTranslation("circuitos.message.fem",generator.getFem()));
+                player.sendMessage(new TextComponentTranslation("circuitos.message.resistance", generator.getResistance()));
             }else if(te instanceof IResistor && !(te instanceof IGenerator)) {
-                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.resistance", ((IResistor) te).getResistance())));
+                IResistor resistor = (IResistor) te;
+                player.sendMessage(new TextComponentTranslation("circuitos.message.resistance", resistor.getResistance()));
+                player.sendMessage(new TextComponentTranslation("circuitos.message.current", resistor.getCurrent()));
             }else if(te instanceof ICapacitor) {
-                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.capacitance", ((ICapacitor) te).getCapacity())));
+                ICapacitor capacitor = (ICapacitor) te;
+                player.sendMessage(new TextComponentTranslation("circuitos.message.capacitance", capacitor.getCapacity()));
             }
             if (te instanceof BaseTileEntity && ((BaseTileEntity) te).master != null) {
 
-                player.sendMessage(new TextComponentString(I18n.format("circuitos.message.master", ((BaseTileEntity) te).master.getPos().toString())));
+                player.sendMessage(new TextComponentTranslation("circuitos.message.master", ((BaseTileEntity) te).master.getPos().toString()));
 
 
             }

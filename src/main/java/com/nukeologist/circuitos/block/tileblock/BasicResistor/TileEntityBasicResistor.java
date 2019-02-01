@@ -26,4 +26,9 @@ public class TileEntityBasicResistor extends BaseTileEntity implements IResistor
     public int getDissipatedEnergy() {
         return 0;
     }
+
+    @Override
+    public double getCurrent() {
+        return 0;
+    }
 }

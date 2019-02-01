@@ -13,6 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -216,6 +217,11 @@ public class CircuitSolver {
 
         LogHelper.logInfo("matrix solved, @" + master.getPos().toString());
         //Now we assign current to each block/tile, and also a Voltage for each node.
+        X = xMatrix.getArray();
+        LogHelper.logInfo("solved: " + Arrays.toString(X));
+        for (int i = 0; i < X.length; i++ ) {
+            LogHelper.logInfo("Pos: " + i + " num: " + X[i][0]);
+        }
     }
 
     private int getNodeNumbers(){

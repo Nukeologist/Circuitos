@@ -8,9 +8,10 @@ tile.circuitos.basicresistor.name=Resistor Basico
 
 item.circuitos.creativemultimeter.name=Multimetro Criativo
 
-circuitos.message.fem=Forca Eletromotriz: %s
+circuitos.message.fem=Forca Eletromotriz: %s V
 circuitos.message.resistance=Resistencia: %s Ω
 circuitos.message.capacitance=Capacitancia: %s
+circuitos.message.current=Corrente: %s A
 circuitos.message.master=Mestre: %s
 
 circuitos.container.basic_generator=Gerador Basico

@@ -38,4 +38,9 @@ public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
     public void setNodeIndex(int nodeIndex) {
         this.nodeIndex = nodeIndex;
     }
+
+    @Override
+    public double getCurrent() {
+        return 0; // for now
+    }
 }
