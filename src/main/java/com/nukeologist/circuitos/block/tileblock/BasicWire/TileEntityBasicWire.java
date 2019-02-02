@@ -9,11 +9,13 @@ public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
 
     private int resistance;
     private int nodeIndex;
+    private double current;
 
 
 
     public TileEntityBasicWire() {
         this.setResistance(1);
+        this.current = 0; //default
     }
 
     @Override
@@ -41,6 +43,11 @@ public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
 
     @Override
     public double getCurrent() {
-        return 0; // for now
+        return current; // for now
+    }
+
+    @Override
+    public void setCurrent(double current) {
+        this.current = current;
     }
 }

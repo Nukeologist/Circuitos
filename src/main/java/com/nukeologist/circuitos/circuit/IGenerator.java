@@ -19,5 +19,9 @@ public interface IGenerator extends IResistor {
     @Override
     void setResistance(int resistance);
 
+    @Override
+    double getCurrent();
 
+    @Override
+    void setCurrent(double current);
 }

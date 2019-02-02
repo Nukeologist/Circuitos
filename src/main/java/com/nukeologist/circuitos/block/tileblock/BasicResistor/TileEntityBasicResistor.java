@@ -6,10 +6,12 @@ import com.nukeologist.circuitos.circuit.IResistor;
 public class TileEntityBasicResistor extends BaseTileEntity implements IResistor {
 
     private int resistance;
+    private double current;
 
     public TileEntityBasicResistor(){
         super();
         this.resistance = 10; //may change default later
+        this.current = 0; //default
     }
 
     @Override
@@ -29,6 +31,11 @@ public class TileEntityBasicResistor extends BaseTileEntity implements IResistor
 
     @Override
     public double getCurrent() {
-        return 0;
+        return current;
+    }
+
+    @Override
+    public void setCurrent(double current) {
+        this.current = current;
     }
 }

@@ -30,6 +30,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     private ItemStackHandler inventory = new ItemStackHandler(2);
     private Stack<TileEntityBasicWire> wiresToLook = new Stack<>();
     private List<BaseTileEntity> tempMachineList = new ArrayList<>();
+    private double current;
 
     public List<BaseTileEntity> machineList = new ArrayList<>();
     public List<BaseTileEntity> allCircuitList = new ArrayList<>();
@@ -189,6 +190,8 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
         super();
         this.setFem(150);
         this.setResistance(10);
+        this.current = 0; //default
+
         this.analyzing = false;
         this.readyToWork = false;
     }
@@ -229,7 +232,12 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     @Override
     public double getCurrent() {
-        return 0;
+        return current;
+    }
+
+    @Override
+    public void setCurrent(double current) {
+        this.current = current;
     }
 
     private int newIndex(){

@@ -15,4 +15,7 @@ public interface IResistor {
 
     double getCurrent();
 
+
+    void setCurrent(double current);
+
 }
