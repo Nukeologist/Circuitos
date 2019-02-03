@@ -1,10 +1,10 @@
 package com.nukeologist.circuitos.block.tileblock.BasicGenerator;
 
 
+import com.nukeologist.circuitos.Config;
 import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.TileEntityBasicWire;
 import com.nukeologist.circuitos.circuit.*;
-import com.nukeologist.circuitos.init.ModBlocks;
 import com.nukeologist.circuitos.network.CircuitosPacketHandler;
 import com.nukeologist.circuitos.network.PacketGeneratorGUIUpdate;
 import com.nukeologist.circuitos.utility.LogHelper;
@@ -57,7 +57,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
             this.analyzed = true;
             BaseTileEntity tileEntity;
             canAnalyze(this, index);
-            doIt(this);
+            analyzeAll(this);
 
             while(!tempMachineList.isEmpty()) {
                 machineList.addAll(tempMachineList);
@@ -67,7 +67,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
                 for(BaseTileEntity machine : machineList){
                     //this.graph.nodes.add(new CircuitNode(newIndex()));
                     canAnalyze(machine, index);
-                    doIt(machine);
+                    analyzeAll(machine);
                 }
 
             }
@@ -78,9 +78,10 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
                 solver.solveCircuit();
                 readyToWork = true;
             }
+
         }
 
-        if(!this.analyzing && world.getTotalWorldTime() % 80 == 0 && !world.isRemote){
+        if(!this.analyzing && world.getTotalWorldTime() % 80 == 0 && !world.isRemote && Config.debug){
             LogHelper.logInfo("Not analyzing: ");
             LogHelper.logInfo("Machine list size: " + machineList.size());
             LogHelper.logInfo("Circuit size: " + allCircuitList.size());
@@ -94,7 +95,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
     }
     /*Method was used a lot */
-    private void doIt(BaseTileEntity tileEntity){
+    private void analyzeAll(BaseTileEntity tileEntity){
         while(!wiresToLook.empty()) {
             tileEntity = wiresToLook.pop();
             canAnalyze(tileEntity, index);
@@ -155,7 +156,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         inventory.deserializeNBT(compound.getCompoundTag("inventory"));
-
+        this.current = compound.getDouble("current");
     }
 
 
@@ -167,7 +168,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
 
 
         ret.setTag("inventory", this.inventory.serializeNBT());
-
+        ret.setDouble("current", current);
 
 
         return ret;
@@ -226,7 +227,7 @@ public class TileEntityBasicGenerator extends BaseTileEntity implements ITickabl
     }
 
     @Override
-    public int getDissipatedEnergy() {
+    public double getDissipatedEnergy() {
         return 0;
     }
 

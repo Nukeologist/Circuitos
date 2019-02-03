@@ -24,8 +24,8 @@ public class TileEntityBasicWire extends BaseTileEntity implements IResistor {
     }
 
     @Override
-    public int getDissipatedEnergy() {
-        return 0;
+    public double getDissipatedEnergy() {
+        return 0; //This may change
     }
 
     @Override

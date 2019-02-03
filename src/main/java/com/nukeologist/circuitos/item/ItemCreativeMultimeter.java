@@ -44,6 +44,7 @@ public class ItemCreativeMultimeter extends BaseItem {
                 IGenerator generator = (IGenerator) te;
                 player.sendMessage(new TextComponentTranslation("circuitos.message.fem",generator.getFem()));
                 player.sendMessage(new TextComponentTranslation("circuitos.message.resistance", generator.getResistance()));
+                player.sendMessage(new TextComponentTranslation("circuitos.message.current", generator.getCurrent()));
             }else if(te instanceof IResistor && !(te instanceof IGenerator)) {
                 IResistor resistor = (IResistor) te;
                 player.sendMessage(new TextComponentTranslation("circuitos.message.resistance", resistor.getResistance()));

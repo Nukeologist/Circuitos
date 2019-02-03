@@ -7,6 +7,7 @@ public class CircuitNode {
 
     private int index;
     private List<CircuitEdge> connections;
+    private double voltage;
 
     public CircuitNode(int index){
         this.index = index;
@@ -25,5 +26,11 @@ public class CircuitNode {
         return connections;
     }
 
+    public double getVoltage() {
+        return voltage;
+    }
 
+    public void setVoltage(double voltage) {
+        this.voltage = voltage;
+    }
 }

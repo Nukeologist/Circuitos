@@ -14,7 +14,7 @@ public interface IGenerator extends IResistor {
     int getResistance();
 
     @Override
-    int getDissipatedEnergy();
+    double getDissipatedEnergy();
 
     @Override
     void setResistance(int resistance);

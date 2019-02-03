@@ -4,6 +4,7 @@ import com.mathworks.Jama.Matrix;
 import com.nukeologist.circuitos.block.tileblock.BaseTileEntity;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.BlockBasicGenerator;
 import com.nukeologist.circuitos.block.tileblock.BasicGenerator.TileEntityBasicGenerator;
+import com.nukeologist.circuitos.block.tileblock.BasicResistor.TileEntityBasicResistor;
 import com.nukeologist.circuitos.block.tileblock.BasicWire.TileEntityBasicWire;
 import com.nukeologist.circuitos.init.ModBlocks;
 import com.nukeologist.circuitos.utility.LogHelper;
@@ -219,9 +220,20 @@ public class CircuitSolver {
         //Now we assign current to each block/tile, and also a Voltage for each node.
         X = xMatrix.getArray();
         LogHelper.logInfo("solved: " + Arrays.toString(X));
+
         for (int i = 0; i < X.length; i++ ) {
             LogHelper.logInfo("Pos: " + i + " num: " + X[i][0]);
         }
+
+        graph.getNodeByIndex(0).setVoltage(0);
+        for (int i = 0; i < nodes - 1; i++) {
+            graph.getNodeByIndex(i + 1).setVoltage(Math.abs(X[i][0]));
+            //node 0 already has a default voltage of 0 (ground)
+        }
+
+        setGeneratorCurrents();
+        setWireCurrents();
+
     }
 
     private int getNodeNumbers(){
@@ -237,6 +249,35 @@ public class CircuitSolver {
             }
         }
         return(i);
+    }
+
+    private void setWireCurrents() {
+        //for resistors its easy:
+        for (CircuitNode node : graph.getNodes()) {
+            for (CircuitEdge edge: node.getConnections()) {
+                if (edge.getConnector() instanceof  TileEntityBasicResistor) {
+                    TileEntityBasicResistor resistor = (TileEntityBasicResistor) edge.getConnector();
+                    double voltage1, voltage2;
+                    voltage1 = edge.getA().getVoltage();
+                    voltage2 = edge.getB().getVoltage();
+                    resistor.setCurrent(Math.abs((voltage1 - voltage2) / resistor.getResistance()));
+                }
+            }
+        }
+    }
+
+    private void setGeneratorCurrents() {
+        /*
+        for (BaseTileEntity te : master.machineList) {
+            if (te instanceof TileEntityBasicGenerator) {
+                TileEntityBasicGenerator generator = (TileEntityBasicGenerator) te;
+                generator.setCurrent(X[nodes - 1 + generator.getGenIndex()][0]);
+            }
+        }
+        */
+        master.machineList.stream()
+                .filter(machine -> machine instanceof TileEntityBasicGenerator)
+                .forEach(generator -> ((TileEntityBasicGenerator) generator).setCurrent(Math.abs(X[nodes - 1 + ((TileEntityBasicGenerator)generator).getGenIndex()][0])));
     }
 
     @SuppressWarnings("Duplicates")

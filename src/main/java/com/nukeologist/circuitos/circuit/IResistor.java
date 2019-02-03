@@ -10,7 +10,7 @@ public interface IResistor {
     void setResistance(int resistance);
 
 
-    int getDissipatedEnergy();
+    double getDissipatedEnergy();
 
 
     double getCurrent();
